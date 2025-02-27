@@ -13,76 +13,43 @@ export default function RegisterPage() {
   const [phone, setPhone] = useState("");
   const navigate = useNavigate();
 
-  const handleOnSubmit = (e) => {
+  const handleOnSubmit = async (e) => {
     e.preventDefault();
-    console.log({ firstName, lastName, email, password, address, phone });
-    axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/users/`,{
-        email : email,
-        firstName : firstName,
-        lastName : lastName,
-        password : password,
-        address : address,
-        phone : phone
-    } ).then(()=>{
-        toast.success("Registration Success")
-        navigate("/login")
-    }).catch((err)=>{
-        toast.error(err?.response?.data?.error||"An error occured")
-    })
+
+    if (password.length < 6) {
+      toast.error("Password must be at least 6 characters long");
+      return;
+    }
+
+    try {
+      await axios.post(
+        `${import.meta.env.VITE_BACKEND_URL}/api/users/`,
+        { firstName, lastName, email, password, address, phone },
+        { headers: { "Content-Type": "application/json" } }
+      );
+
+      toast.success("Registration Successful!");
+      navigate("/login");
+    } catch (err) {
+      console.log(err);
+      toast.error(
+        err.response?.data?.error || "An unexpected error occurred."
+      );
+    }
   };
 
   return (
     <div className="bg-picture w-full h-screen flex justify-center items-center">
       <form onSubmit={handleOnSubmit}>
         <div className="w-[400px] min-h-[600px] backdrop-blur-xl rounded-2xl flex flex-col items-center py-10 relative">
-          <img
-            src="/logo.png"
-            alt="logo"
-            className="w-[100px] h-[100px] object-cover mb-6"
-          />
-          <input
-            type="text"
-            placeholder="First Name"
-            className="input-field"
-            value={firstName}
-            onChange={(e) => setFirstName(e.target.value)}
-          />
-          <input
-            type="text"
-            placeholder="Last Name"
-            className="input-field"
-            value={lastName}
-            onChange={(e) => setLastName(e.target.value)}
-          />
-          <input
-            type="email"
-            placeholder="Email"
-            className="input-field"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <input
-            type="password"
-            placeholder="Password"
-            className="input-field"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <input
-            type="text"
-            placeholder="Address"
-            className="input-field"
-            value={address}
-            onChange={(e) => setAddress(e.target.value)}
-          />
-          <input
-            type="text"
-            placeholder="Phone"
-            className="input-field"
-            value={phone}
-            onChange={(e) => setPhone(e.target.value)}
-          />
-          <button className="my-8 w-[300px] h-[50px] bg-[#efac38] text-2xl text-white rounded-lg">
+          <img src="/logo.png" alt="logo" className="w-[100px] h-[100px] object-cover mb-6" />
+          <input type="text" placeholder="First Name" className="input-field" value={firstName} onChange={(e) => setFirstName(e.target.value)} required />
+          <input type="text" placeholder="Last Name" className="input-field" value={lastName} onChange={(e) => setLastName(e.target.value)} required />
+          <input type="email" placeholder="Email" className="input-field" value={email} onChange={(e) => setEmail(e.target.value)} required />
+          <input type="password" placeholder="Password" className="input-field" value={password} onChange={(e) => setPassword(e.target.value)} required minLength={6} />
+          <input type="text" placeholder="Address" className="input-field" value={address} onChange={(e) => setAddress(e.target.value)} required />
+          <input type="text" placeholder="Phone" className="input-field" value={phone} onChange={(e) => setPhone(e.target.value)} required />
+          <button type="submit" className="my-8 w-[300px] h-[50px] bg-[#efac38] text-2xl text-white rounded-lg">
             Register
           </button>
         </div>

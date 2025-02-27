@@ -18,7 +18,7 @@ export default function Items(){
       })
     }
     
-  },[])
+  },[state])
   return(
     <div className="w-full h-full flex flex-wrap justify-center  pt-[50px]">
       {

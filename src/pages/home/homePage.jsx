@@ -6,19 +6,19 @@ import Gallery from "./gallery";
 import Contact from "./contact";
 import ErrorNotFound from "./error";
 
-export default function HomePage(){
-  return(
+export default function HomePage() {
+  return (
     <>
-      <Header/>
+      <Header />
       <div className="h-[calc(100vh-100px)] w-full">
-        <Routes path="/*">
-          <Route path="/contact" element={<Contact/>}/>
-          <Route path="/gallery" element={<Gallery/>}/>
-          <Route path="/items" element={<Items/>}/>
-          <Route path="/" element={<Home/>}/>
-          <Route path="/*" element={<ErrorNotFound/>}/>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/items" element={<Items />} />
+          <Route path="/gallery" element={<Gallery />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="*" element={<ErrorNotFound />} />
         </Routes>
       </div>
     </>
-  )
+  );
 }
