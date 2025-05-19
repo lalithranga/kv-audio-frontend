@@ -69,8 +69,3 @@ Simply connect your repository to any of these services for automatic deployment
 - React Hot Toast
 
 
-## 🔗 Deployment
-
-
-
-)
