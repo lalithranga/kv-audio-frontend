@@ -27,7 +27,7 @@ A modern, responsive personal portfolio website built with React, Vite, and Tail
 - React Hot Toast
 
 
-   ```
+
 
 
 ### Styling
